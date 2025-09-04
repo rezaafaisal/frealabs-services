@@ -25,7 +25,7 @@ jobs:
             cd "${{ secrets.DIRECTORY }}"
             git checkout main
             git pull origin main
-            docker compose up -p frealabs -d --build
+            docker compose up -d --build
 
       - name: Reload Caddy
         uses: appleboy/ssh-action@master
