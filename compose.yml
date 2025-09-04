@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Layanan Caddy sebagai Reverse Proxy Terpusat
   caddy:
