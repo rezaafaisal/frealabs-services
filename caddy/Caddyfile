@@ -1,15 +1,1 @@
-frealabs.id {
-    respond "Hello from Caddy!"
-}
-
-portainer.frealabs.id {
-    reverse_proxy https://localhost:9443
-}
-
-cicd.frealabs.id {
-   reverse_proxy http://localhost:45001
-}
-
-dev.softbooth.com {
-   reverse_proxy http://localhost:11010
-}
+import conf.d/*.caddy
