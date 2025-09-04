@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: executing remote ssh commands using password
+      - name: Sync to Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -26,6 +26,18 @@ jobs:
             git checkout main
             git pull origin main
             docker compose up -d --build
+
+      - name: Reload Caddy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            docker exec shared-caddy caddy fmt --overwrite /etc/caddy/Caddyfile
+            docker exec shared-caddy caddy validate --config /etc/caddy/Caddyfile
+            docker exec shared-caddy caddy reload --config /etc/caddy/Caddyfile
 
       - name: Success Notification
         if: success()

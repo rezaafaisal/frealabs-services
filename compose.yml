@@ -37,6 +37,33 @@ services:
     restart: always
     ports:
       - "${REDIS_PORT}:6379"
+
+    volumes:
+      - redis_data:/data
+    networks:
+      - shared_net
+
+  jenkins:
+    image: jenkins/jenkins:latest
+    container_name: shared-jenkins
+    restart: always
+    ports:
+      - "${JENKINS_PORT}:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - shared_net
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: shared-portainer
+    restart: always
+    ports:
+      - "${PORTAINER_PORT}:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
     networks:
       - shared_net
 
@@ -48,3 +75,6 @@ networks:
 # Volume untuk persistensi data
 volumes:
   pg_data:
+  portainer_data:
+  redis_data:
+  jenkins_home:
