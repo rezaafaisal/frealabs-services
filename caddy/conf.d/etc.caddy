@@ -3,5 +3,5 @@ portainer.frealabs.id {
 }
 
 cicd.frealabs.id {
-   reverse_proxy http://jenkins:45001
+   reverse_proxy http://jenkins:8080
 }
