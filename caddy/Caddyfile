@@ -1,3 +1,3 @@
-147.93.159.91 {
+frealabs.id {
     respond "Hello from Caddy!"
 }
