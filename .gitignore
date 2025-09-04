@@ -1,4 +1,5 @@
-*
-!.gitignore
-!compose.yml
+caddy/*
 !caddy/Caddyfile
+pgsql
+
+.env

@@ -1,0 +1,62 @@
+
+name: Main Branch
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd "${{ secrets.DIRECTORY }}"
+            git checkout main
+            git pull origin main
+            docker compose up -d --build
+
+      - name: Success Notification
+        if: success()
+        uses: appleboy/telegram-action@master
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        with:
+          to: ${{ secrets.TELEGRAM_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            ✅ *Deployment Successful!* 🎉
+
+            `${{ github.event.head_commit.message }}`
+
+            📂 ${{ github.repository }}
+            🧑‍💻 ${{ github.actor }}
+
+      - name: Failure Notification
+        if: failure()
+        uses: appleboy/telegram-action@master
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        with:
+          to: ${{ secrets.TELEGRAM_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            ❌ *Deployment Failed!*
+
+            `${{ github.event.head_commit.message }}`
+
+            📂 ${{ github.repository }}
+            🧑‍💻 ${{ github.actor }}
