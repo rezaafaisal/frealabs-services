@@ -1,5 +1,5 @@
 portainer.frealabs.id {
-	reverse_proxy https://portainer:9443 {
+	reverse_proxy portainer:9443 {
 		transport http {
 			tls_insecure_skip_verify
 		}
