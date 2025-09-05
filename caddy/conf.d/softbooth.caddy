@@ -1,3 +1,7 @@
 dev.api.softbooth.com {
 	reverse_proxy http://softbooth-api-dev:8000
 }
+
+dev.softbooth.com {
+	reverse_proxy http://softbooth-dev:3000
+}
