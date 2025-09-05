@@ -1,0 +1,3 @@
+api.pbf.frealabs.id {
+	reverse_proxy http://softpbf-api:8000
+}
