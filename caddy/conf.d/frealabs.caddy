@@ -1,3 +1,7 @@
 frealabs.id {
     respond "Hello from Caddy!"
 }
+
+test.frealabs.id{
+    reverse_proxy http://try-franken:8000
+}
