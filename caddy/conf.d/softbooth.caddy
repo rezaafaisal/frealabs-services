@@ -1,0 +1,3 @@
+dev.api.softbooth.com {
+	reverse_proxy http://softbooth-api-dev:8000
+}
